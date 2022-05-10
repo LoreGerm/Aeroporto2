@@ -1,6 +1,8 @@
 
 from django.db import models
 
+#from voli.models import Volo
+
 # Create your models here.
 class Aereo(models.Model):
     codice = models.CharField(max_length=50, default='', unique=True)
@@ -21,15 +23,30 @@ class Aeroporto(models.Model):
     codice_iata = models.CharField(max_length=50, default='', unique=True)
     lat_lng = models.CharField(max_length=50, default='')
 
+    def __str__(self) -> str:
+        return self.nome
+    
+    class Meta:
+        verbose_name = 'Aeroporto'
+        verbose_name_plural = 'Aeroporti'
+
 
 
 class Tratta(models.Model):
     codice = models.CharField(max_length=50, default='', unique=True)
+    ora_partenza = models.TimeField()
+    ora_arrivo = models.TimeField()
+    data_partenza = models.DateField()
+    data_arrivo = models.DateField()
     aereo = models.ForeignKey(Aereo, on_delete=models.SET_NULL, null=True, blank=False)
-    volo = 0
-    ora_partenza = models.TimeField(default='')
-    ora_arrivo = models.TimeField(default='')
-    data_partenza = models.DateField(default='')
-    data_arrivo = models.DateField(default='')
     aeroporto_partenza = models.ForeignKey(Aeroporto, on_delete=models.SET_NULL, null=True, blank=False, related_name='aeroporto_partenza')
     aeroporto_arrivo = models.ForeignKey(Aeroporto, on_delete=models.SET_NULL, null=True, blank=False, related_name='aeroporto_arrivo')
+    aereo = models.ForeignKey(Aereo, on_delete=models.SET_NULL, null=True, blank=False)
+    #volo = models.ForeignKey(Volo, on_delete=models.SET_NULL, null=True, blank=False)
+
+    def __str__(self) -> str:
+        return self.aeroporto_partenza + ' - ' + self.aeroporto_arrivo
+    
+    class Meta:
+        verbose_name = 'Tratta'
+        verbose_name_plural = 'Tratte'
