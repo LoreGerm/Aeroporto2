@@ -1,7 +1,6 @@
 
 from django.db import models
 
-#from voli.models import Volo
 
 # Create your models here.
 class Aereo(models.Model):
@@ -42,7 +41,6 @@ class Tratta(models.Model):
     aeroporto_partenza = models.ForeignKey(Aeroporto, on_delete=models.SET_NULL, null=True, blank=False, related_name='aeroporto_partenza')
     aeroporto_arrivo = models.ForeignKey(Aeroporto, on_delete=models.SET_NULL, null=True, blank=False, related_name='aeroporto_arrivo')
     aereo = models.ForeignKey(Aereo, on_delete=models.SET_NULL, null=True, blank=False)
-    #volo = models.ForeignKey(Volo, on_delete=models.SET_NULL, null=True, blank=False)
 
     def __str__(self) -> str:
         return self.aeroporto_partenza + ' - ' + self.aeroporto_arrivo
